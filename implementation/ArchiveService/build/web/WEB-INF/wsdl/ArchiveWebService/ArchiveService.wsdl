@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://ns.ounapuu.ee"
+                  targetNamespace="http://ns.ounapuu.ee">
+    <wsdl:types>
+        <xs:schema targetNamespace="http://ns.ounapuu.ee" elementFormDefault="qualified">
+            <xs:complexType name="ArchivalProjectType">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:integer"/>
+                    <xs:element name="projectName" type="tns:NonEmptyString"/>
+                    <xs:element name="originalUrl" type="tns:UrlType"/>
+                    <xs:element name="newUrl" type="tns:UrlType"/>
+                    <xs:element name="submitted" type="xs:dateTime"/>
+                    <xs:element name="lastUpdated" type="xs:dateTime"/>
+                    <xs:element name="submitter" type="tns:NonEmptyString"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="resources" type="tns:ArchiveResourceListType"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ArchiveResourceType">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:integer"/>
+                    <xs:element name="name" type="tns:NonEmptyString"/>
+                    <xs:element name="type" type="tns:ResourceType"/>
+                    <xs:element name="submitted" type="xs:dateTime"/>
+                    <xs:element name="lastUpdated" type="xs:dateTime"/>
+                    <xs:element name="submitter" type="tns:NonEmptyString"/>
+                    <xs:element name="originalUrl" type="tns:UrlType"/>
+                    <xs:element name="newUrl" type="tns:UrlType"/>
+                    <xs:element minOccurs="0" name="projectId" type="xs:integer"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ArchivalProjectListType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="project" type="tns:ArchivalProjectType"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ArchiveResourceListType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="resource"
+                                type="tns:ArchiveResourceType"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="RequestHeaderType">
+                <xs:sequence>
+                    <xs:element name="apiToken" type="tns:NonEmptyString"/>
+                    <xs:element name="requestId" type="tns:NonEmptyString"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:simpleType name="UrlType">
+                <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="https?://.+"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:simpleType name="NonEmptyString">
+                <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:simpleType name="ResourceType">
+                <xs:restriction base="tns:NonEmptyString">
+                    <xs:enumeration value="webpage"/>
+                    <xs:enumeration value="audio"/>
+                    <xs:enumeration value="video"/>
+                    <xs:enumeration value="software"/>
+                    <xs:enumeration value="misc"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:element name="getArchivalProjectRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+                        <xs:element name="projectId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getArchivalProjectResponse" type="tns:ArchivalProjectType"/>
+
+            <xs:element name="getArchivalProjectListRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+                        <xs:element minOccurs="0" name="projectName" type="tns:NonEmptyString"/>
+                        <xs:element minOccurs="0" name="originalUrl" type="tns:UrlType"/>
+                        <xs:element minOccurs="0" name="submitter" type="tns:NonEmptyString"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getArchivalProjectListResponse" type="tns:ArchivalProjectListType"/>
+
+            <xs:element name="addArchivalProjectRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+
+                        <xs:element name="projectName" type="tns:NonEmptyString"/>
+                        <xs:element name="originalUrl" type="tns:UrlType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addArchivalProjectResponse" type="tns:ArchivalProjectType"/>
+
+            <xs:element name="getArchiveResourceRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+
+                        <xs:element name="resourceId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getArchiveResourceResponse" type="tns:ArchiveResourceType"/>
+
+            <xs:element name="getArchiveResourceListRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+
+                        <xs:element minOccurs="0" name="submitter" type="tns:NonEmptyString"/>
+                        <xs:element minOccurs="0" name="name" type="tns:NonEmptyString"/>
+                        <xs:element minOccurs="0" name="type" type="tns:ResourceType">
+
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getArchiveResourceListResponse" type="tns:ArchiveResourceListType"/>
+
+            <xs:element name="addArchiveResourceRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+
+                        <xs:element name="name" type="tns:NonEmptyString"/>
+                        <xs:element name="type" type="tns:ResourceType"/>
+                        <xs:element name="originalUrl" type="tns:UrlType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addArchiveResourceResponse" type="tns:ArchiveResourceType"/>
+
+            <xs:element name="addArchiveResourceToArchivalProjectRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+
+                        <xs:element name="projectId" type="xs:integer"/>
+                        <xs:element name="resourceId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addArchiveResourceToArchivalProjectResponse" type="tns:ArchiveResourceType"/>
+
+            <xs:element name="getArchiveResourcesForArchivalProjectRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+                        <xs:element name="projectId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getArchiveResourcesForArchivalProjectResponse" type="tns:ArchiveResourceListType"/>
+
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name="getArchivalProjectMessageRequest">
+        <wsdl:part name="parameter" element="tns:getArchivalProjectRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getArchivalProjectMessageResponse">
+        <wsdl:part name="parameter" element="tns:getArchivalProjectResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getArchivalProjectListMessageRequest">
+        <wsdl:part name="parameter" element="tns:getArchivalProjectListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getArchivalProjectListMessageResponse">
+        <wsdl:part name="parameter" element="tns:getArchivalProjectListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="addArchivalProjectMessageRequest">
+        <wsdl:part name="parameter" element="tns:addArchivalProjectRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addArchivalProjectMessageResponse">
+        <wsdl:part name="parameter" element="tns:addArchivalProjectResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="getArchiveResourceMessageRequest">
+        <wsdl:part name="parameter" element="tns:getArchiveResourceRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getArchiveResourceMessageResponse">
+        <wsdl:part name="parameter" element="tns:getArchiveResourceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getArchiveResourceListMessageRequest">
+        <wsdl:part name="parameter" element="tns:getArchiveResourceListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getArchiveResourceListMessageResponse">
+        <wsdl:part name="parameter" element="tns:getArchiveResourceListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="addArchiveResourceMessageRequest">
+        <wsdl:part name="parameter" element="tns:addArchiveResourceRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addArchiveResourceMessageResponse">
+        <wsdl:part name="parameter" element="tns:addArchiveResourceResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="addArchiveResourceToArchivalProjectMessageRequest">
+        <wsdl:part name="parameter" element="tns:addArchiveResourceToArchivalProjectRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addArchiveResourceToArchivalProjectMessageResponse">
+        <wsdl:part name="parameter" element="tns:addArchiveResourceToArchivalProjectResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getArchiveResourcesForArchivalProjectMessageRequest">
+        <wsdl:part name="parameter" element="tns:getArchiveResourcesForArchivalProjectRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getArchiveResourcesForArchivalProjectMessageResponse">
+        <wsdl:part name="parameter" element="tns:getArchiveResourcesForArchivalProjectResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="ArchiveServicePortType">
+        <wsdl:operation name="getArchivalProject">
+            <wsdl:input message="tns:getArchivalProjectMessageRequest"/>
+            <wsdl:output message="tns:getArchivalProjectMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getArchivalProjectList">
+            <wsdl:input message="tns:getArchivalProjectListMessageRequest"/>
+            <wsdl:output message="tns:getArchivalProjectListMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="addArchivalProject">
+            <wsdl:input message="tns:addArchivalProjectMessageRequest"/>
+            <wsdl:output message="tns:addArchivalProjectMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getArchiveResource">
+            <wsdl:input message="tns:getArchiveResourceMessageRequest"/>
+            <wsdl:output message="tns:getArchiveResourceMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="addArchiveResource">
+            <wsdl:input message="tns:addArchiveResourceMessageRequest"/>
+            <wsdl:output message="tns:addArchiveResourceMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getArchiveResourceList">
+            <wsdl:input message="tns:getArchiveResourceListMessageRequest"/>
+            <wsdl:output message="tns:getArchiveResourceListMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getArchiveResourcesForArchivalProject">
+            <wsdl:input message="tns:getArchiveResourcesForArchivalProjectMessageRequest"/>
+            <wsdl:output message="tns:getArchiveResourcesForArchivalProjectMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="addArchiveResourceToArchivalProject">
+            <wsdl:input message="tns:addArchiveResourceToArchivalProjectMessageRequest"/>
+            <wsdl:output message="tns:addArchiveResourceToArchivalProjectMessageResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ArchiveServiceBinding" type="tns:ArchiveServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getArchivalProject">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getArchivalProjectList">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addArchivalProject">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getArchiveResource">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addArchiveResource">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getArchiveResourceList">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getArchiveResourcesForArchivalProject">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addArchiveResourceToArchivalProject">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ArchiveService">
+        <wsdl:port name="ArchiveServicePort" binding="tns:ArchiveServiceBinding">
+            <soap:address location="http://localhost:8080/ArchiveService/ArchiveService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

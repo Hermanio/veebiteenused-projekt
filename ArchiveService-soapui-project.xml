@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="b4b9a5a7-0ff0-4328-9a43-6bed95b7fe82" activeEnvironment="Default" name="ArchiveService" resourceRoot="" soapui-version="5.4.0-EB" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.actions.iface.tools.soapui.TestRunnerAction@values-local"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="Report Format(s)" value=""/>
+  <con:entry key="Host:Port" value=""/>
+  <con:entry key="Export JUnit Results" value="false"/>
+  <con:entry key="Export All" value="false"/>
+  <con:entry key="Save After" value="false"/>
+  <con:entry key="Add Settings" value="false"/>
+  <con:entry key="WSS Password Type" value=""/>
+  <con:entry key="TestSuite" value="http://thinkpad-t430:8080 TestSuite"/>
+  <con:entry key="Endpoint" value=""/>
+  <con:entry key="Select Report Type" value=""/>
+  <con:entry key="System Properties" value=""/>
+  <con:entry key="Password" value=""/>
+  <con:entry key="Print Report" value="false"/>
+  <con:entry key="Open Report" value="false"/>
+  <con:entry key="Export JUnit Results with test properties" value="false"/>
+  <con:entry key="Global Properties" value=""/>
+  <con:entry key="Project Properties" value=""/>
+  <con:entry key="Project Password" value=""/>
+  <con:entry key="TestCase" value="&lt;all>"/>
+  <con:entry key="Username" value=""/>
+  <con:entry key="user-settings.xml Password" value=""/>
+  <con:entry key="TestRunner Path" value=""/>
+  <con:entry key="Environment" value="Default"/>
+  <con:entry key="Coverage Report" value="false"/>
+  <con:entry key="Enable UI" value="false"/>
+  <con:entry key="Root Folder" value=""/>
+  <con:entry key="Ignore Errors" value="false"/>
+  <con:entry key="Domain" value=""/>
+  <con:entry key="Tool Args" value=""/>
+  <con:entry key="Save Project" value="false"/>
+</xml-fragment>]]></con:setting></con:settings><con:interface xsi:type="con:WsdlInterface" id="503c0e02-d32c-4bb4-8132-19e5c53c1727" wsaVersion="NONE" name="ArchiveServiceBinding" type="wsdl" bindingName="{http://ns.ounapuu.ee}ArchiveServiceBinding" soapVersion="1_1" anonymous="optional" definition="file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/conf/xml-resources/web-services/ArchiveWebService/wsdl/ArchiveService.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/conf/xml-resources/web-services/ArchiveWebService/wsdl/ArchiveService.wsdl"><con:part><con:url>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/conf/xml-resources/web-services/ArchiveWebService/wsdl/ArchiveService.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://ns.ounapuu.ee" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ns.ounapuu.ee">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://ns.ounapuu.ee" elementFormDefault="qualified">
+      <xs:complexType name="ArchivalProjectType">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer"/>
+          <xs:element name="projectName" type="tns:NonEmptyString"/>
+          <xs:element name="originalUrl" type="tns:UrlType"/>
+          <xs:element name="newUrl" type="tns:UrlType"/>
+          <xs:element name="submitted" type="xs:dateTime"/>
+          <xs:element name="lastUpdated" type="xs:dateTime"/>
+          <xs:element name="submitter" type="tns:NonEmptyString"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="resources" type="tns:ArchiveResourceListType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArchiveResourceType">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer"/>
+          <xs:element name="name" type="tns:NonEmptyString"/>
+          <xs:element name="type" type="tns:ResourceType"/>
+          <xs:element name="submitted" type="xs:dateTime"/>
+          <xs:element name="lastUpdated" type="xs:dateTime"/>
+          <xs:element name="submitter" type="tns:NonEmptyString"/>
+          <xs:element name="originalUrl" type="tns:UrlType"/>
+          <xs:element name="newUrl" type="tns:UrlType"/>
+          <xs:element minOccurs="0" name="projectId" type="xs:integer"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArchivalProjectListType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="project" type="tns:ArchivalProjectType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArchiveResourceListType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="resource" type="tns:ArchiveResourceType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RequestHeaderType">
+        <xs:sequence>
+          <xs:element name="apiToken" type="tns:NonEmptyString"/>
+          <xs:element name="requestId" type="tns:NonEmptyString"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="UrlType">
+        <xs:restriction base="xs:anyURI">
+          <xs:pattern value="https?://.+"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="NonEmptyString">
+        <xs:restriction base="xs:string">
+          <xs:minLength value="1"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ResourceType">
+        <xs:restriction base="tns:NonEmptyString">
+          <xs:enumeration value="webpage"/>
+          <xs:enumeration value="audio"/>
+          <xs:enumeration value="video"/>
+          <xs:enumeration value="software"/>
+          <xs:enumeration value="misc"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="getArchivalProjectRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+            <xs:element name="projectId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getArchivalProjectResponse" type="tns:ArchivalProjectType"/>
+      <xs:element name="getArchivalProjectListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+            <xs:element minOccurs="0" name="projectName" type="tns:NonEmptyString"/>
+            <xs:element minOccurs="0" name="originalUrl" type="tns:UrlType"/>
+            <xs:element minOccurs="0" name="submitter" type="tns:NonEmptyString"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getArchivalProjectListResponse" type="tns:ArchivalProjectListType"/>
+      <xs:element name="addArchivalProjectRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+            <xs:element name="projectName" type="tns:NonEmptyString"/>
+            <xs:element name="originalUrl" type="tns:UrlType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addArchivalProjectResponse" type="tns:ArchivalProjectType"/>
+      <xs:element name="getArchiveResourceRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+            <xs:element name="resourceId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getArchiveResourceResponse" type="tns:ArchiveResourceType"/>
+      <xs:element name="getArchiveResourceListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+            <xs:element minOccurs="0" name="submitter" type="tns:NonEmptyString"/>
+            <xs:element minOccurs="0" name="name" type="tns:NonEmptyString"/>
+            <xs:element minOccurs="0" name="type" type="tns:ResourceType"></xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getArchiveResourceListResponse" type="tns:ArchiveResourceListType"/>
+      <xs:element name="addArchiveResourceRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+            <xs:element name="name" type="tns:NonEmptyString"/>
+            <xs:element name="type" type="tns:ResourceType"/>
+            <xs:element name="originalUrl" type="tns:UrlType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addArchiveResourceResponse" type="tns:ArchiveResourceType"/>
+      <xs:element name="addArchiveResourceToArchivalProjectRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+            <xs:element name="projectId" type="xs:integer"/>
+            <xs:element name="resourceId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addArchiveResourceToArchivalProjectResponse" type="tns:ArchiveResourceType"/>
+      <xs:element name="getArchiveResourcesForArchivalProjectRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="requestHeader" type="tns:RequestHeaderType"/>
+            <xs:element name="projectId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getArchiveResourcesForArchivalProjectResponse" type="tns:ArchiveResourceListType"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getArchivalProjectMessageRequest">
+    <wsdl:part name="parameter" element="tns:getArchivalProjectRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getArchivalProjectMessageResponse">
+    <wsdl:part name="parameter" element="tns:getArchivalProjectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getArchivalProjectListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getArchivalProjectListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getArchivalProjectListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getArchivalProjectListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addArchivalProjectMessageRequest">
+    <wsdl:part name="parameter" element="tns:addArchivalProjectRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addArchivalProjectMessageResponse">
+    <wsdl:part name="parameter" element="tns:addArchivalProjectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getArchiveResourceMessageRequest">
+    <wsdl:part name="parameter" element="tns:getArchiveResourceRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getArchiveResourceMessageResponse">
+    <wsdl:part name="parameter" element="tns:getArchiveResourceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getArchiveResourceListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getArchiveResourceListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getArchiveResourceListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getArchiveResourceListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addArchiveResourceMessageRequest">
+    <wsdl:part name="parameter" element="tns:addArchiveResourceRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addArchiveResourceMessageResponse">
+    <wsdl:part name="parameter" element="tns:addArchiveResourceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addArchiveResourceToArchivalProjectMessageRequest">
+    <wsdl:part name="parameter" element="tns:addArchiveResourceToArchivalProjectRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addArchiveResourceToArchivalProjectMessageResponse">
+    <wsdl:part name="parameter" element="tns:addArchiveResourceToArchivalProjectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getArchiveResourcesForArchivalProjectMessageRequest">
+    <wsdl:part name="parameter" element="tns:getArchiveResourcesForArchivalProjectRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getArchiveResourcesForArchivalProjectMessageResponse">
+    <wsdl:part name="parameter" element="tns:getArchiveResourcesForArchivalProjectResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ArchiveServicePortType">
+    <wsdl:operation name="getArchivalProject">
+      <wsdl:input message="tns:getArchivalProjectMessageRequest"/>
+      <wsdl:output message="tns:getArchivalProjectMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getArchivalProjectList">
+      <wsdl:input message="tns:getArchivalProjectListMessageRequest"/>
+      <wsdl:output message="tns:getArchivalProjectListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addArchivalProject">
+      <wsdl:input message="tns:addArchivalProjectMessageRequest"/>
+      <wsdl:output message="tns:addArchivalProjectMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getArchiveResource">
+      <wsdl:input message="tns:getArchiveResourceMessageRequest"/>
+      <wsdl:output message="tns:getArchiveResourceMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addArchiveResource">
+      <wsdl:input message="tns:addArchiveResourceMessageRequest"/>
+      <wsdl:output message="tns:addArchiveResourceMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getArchiveResourceList">
+      <wsdl:input message="tns:getArchiveResourceListMessageRequest"/>
+      <wsdl:output message="tns:getArchiveResourceListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getArchiveResourcesForArchivalProject">
+      <wsdl:input message="tns:getArchiveResourcesForArchivalProjectMessageRequest"/>
+      <wsdl:output message="tns:getArchiveResourcesForArchivalProjectMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addArchiveResourceToArchivalProject">
+      <wsdl:input message="tns:addArchiveResourceToArchivalProjectMessageRequest"/>
+      <wsdl:output message="tns:addArchiveResourceToArchivalProjectMessageResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ArchiveServiceBinding" type="tns:ArchiveServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getArchivalProject">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getArchivalProjectList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addArchivalProject">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getArchiveResource">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addArchiveResource">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getArchiveResourceList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getArchiveResourcesForArchivalProject">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addArchiveResourceToArchivalProject">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ArchiveService">
+    <wsdl:port name="ArchiveServicePort" binding="tns:ArchiveServiceBinding">
+      <soap:address location="http://localhost:8080/ArchiveService/ArchiveService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:6969</con:endpoint><con:endpoint>http://localhost:8080/ArchiveService/ArchiveService</con:endpoint></con:endpoints><con:operation id="ffc4e7a7-93c7-44ba-9db7-13053743295e" isOneWay="false" action="" name="addArchivalProject" bindingOperationName="addArchivalProject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d6c4da9a-f723-436e-91d7-0f4f6af2fc81" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:addArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>59584e686332526863325268633252</ns:apiToken>
+            <ns:requestId>asdffasdfasdf</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectName>The Witty Wickers</ns:projectName>
+         <ns:originalUrl>http://witson.com</ns:originalUrl>
+      </ns:addArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ns.ounapuu.ee/ArchiveServicePortType/addArchivalProjectRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="2ffb324d-15be-49f1-8079-51eea45da54e" isOneWay="false" action="" name="addArchiveResource" bindingOperationName="addArchiveResource" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ba83b49f-3731-4307-a366-0b74c79e0d62" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:addArchiveResourceRequest>
+        <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>43265534234</ns:requestId>
+         </ns:requestHeader>
+         <ns:name>Cool Beans - Dat Life (explicit)</ns:name>
+         <ns:type>audio</ns:type>
+         <ns:originalUrl>http://bootleg-songz.com/music/cool%20beans_dat_life.mp3</ns:originalUrl>
+      </ns:addArchiveResourceRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ns.ounapuu.ee/ArchiveServicePortType/addArchiveResourceRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="288b38dd-64ff-41de-8714-a8e12ffa6f09" isOneWay="false" action="" name="addArchiveResourceToArchivalProject" bindingOperationName="addArchiveResourceToArchivalProject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="00e47082-4d18-40d6-adbf-7cb022595893" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:addArchiveResourceToArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>43254334234</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectId>1000001</ns:projectId>
+         <ns:resourceId>1000003</ns:resourceId>
+      </ns:addArchiveResourceToArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ns.ounapuu.ee/ArchiveServicePortType/addArchiveResourceToArchivalProjectRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="7404256c-8c7c-4eb3-87a5-d114b753a973" isOneWay="false" action="" name="getArchivalProject" bindingOperationName="getArchivalProject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="a79c30ec-4fe9-462d-bb29-d64087a791e9" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>54654446457665368856</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectId>1000001</ns:projectId>
+      </ns:getArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchivalProjectRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="9a3833c8-649d-4416-87f0-c181cf392c12" isOneWay="false" action="" name="getArchivalProjectList" bindingOperationName="getArchivalProjectList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e9d7126d-2d0d-40e0-87a1-f8d6e2a4a7cd" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchivalProjectListRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>43256465334234</ns:requestId>
+         </ns:requestHeader>
+        
+      </ns:getArchivalProjectListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchivalProjectListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="8be966ec-d4ae-473e-be64-e0d45d86eb92" isOneWay="false" action="" name="getArchiveResource" bindingOperationName="getArchiveResource" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="6df26d64-27e7-4bcf-8ffb-1cd72920a63c" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourceRequest>
+        <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>6543655783456345</ns:requestId>
+         </ns:requestHeader>
+         <ns:resourceId>1000000</ns:resourceId>
+      </ns:getArchiveResourceRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchiveResourceRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="4cf2a207-382a-4602-bb07-c15abfe59bcc" isOneWay="false" action="" name="getArchiveResourceList" bindingOperationName="getArchiveResourceList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="063ca711-3e58-4e99-8aa0-36fa1b6c9a6b" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourceListRequest>
+          <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>4323454643654234</ns:requestId>
+         </ns:requestHeader>
+        
+      </ns:getArchiveResourceListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchiveResourceListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="ad7fd446-c14c-43a3-85f0-2d8469509d33" isOneWay="false" action="" name="getArchiveResourcesForArchivalProject" bindingOperationName="getArchiveResourcesForArchivalProject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="91896552-e221-49a9-8cfb-4f30ad1c9578" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourcesForArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>43234546457234</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectId>1000000</ns:projectId>
+      </ns:getArchiveResourcesForArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchiveResourcesForArchivalProjectRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:RestService" id="24de02a6-98d6-4864-ae2e-8f1918f08acb" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://thinkpad-t430:8080" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>http://localhost:8080</con:endpoint></con:endpoints><con:resource name="projects" path="/ArchiveService/webresources/projects" id="435d7bef-1bc2-4156-85f8-054dd62d406d"><con:settings/><con:parameters><con:parameter><con:name>apiToken</con:name><con:style>QUERY</con:style></con:parameter><con:parameter><con:name>requestId</con:name><con:style>QUERY</con:style></con:parameter><con:parameter><con:name>projectName</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>submitter</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>originalUrl</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:resource name="1000001" path="1000001" id="baf672a0-c10e-498f-925d-30c5d5fee63b"><con:settings/><con:parameters/><con:resource name="resources" path="resources" id="ed0b971c-7403-437d-8d17-16e4f45260d0"><con:settings/><con:parameters/><con:method name="getArchiveResourcesForArchivalProject" id="b564d74a-2d33-493b-9476-8843d06667aa" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:res="http://localhost/ArchiveService/webresources/projects/1000001/resources">res:Response</con:element></con:representation><con:request name="Request 1" id="e595c4c2-1a29-4eba-aba9-7561fff01b76" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/ArchiveService/webresources/projects/1000001/resources</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="8145646381684765237457"/>
+  <con:entry key="originalUrl" value=""/>
+  <con:entry key="projectName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>projectName</con:entry><con:entry>submitter</con:entry><con:entry>originalUrl</con:entry></con:parameterOrder></con:request></con:method><con:method name="addArchiveResourceToArchivalProject" id="2a042214-9db0-4afb-8f70-15d1c5b46e33" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>204</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:xht="http://www.w3.org/1999/xhtml">xht:html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:res="http://localhost/ArchiveService/webresources/projects/1000001/resources">res:Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/plain</con:mediaType><con:status>400</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Request 1" id="eaa93f91-4b40-46cf-a238-c8d4f7ce8beb" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request>{
+	"resourceId":1000004
+}</con:request><con:originalUri>http://localhost/ArchiveService/webresources/projects/1000001/resources</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="54444444432874178541327"/>
+  <con:entry key="originalUrl" value=""/>
+  <con:entry key="projectName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>projectName</con:entry><con:entry>submitter</con:entry><con:entry>originalUrl</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:method name="getArchivalProject" id="524026f3-d2dd-4c80-b1de-8f4f0ab5d47d" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ns="http://localhost/ArchiveService/webresources/projects/1000001">ns:Response</con:element></con:representation><con:request name="Request 1" id="b0626ee5-cafe-4a4f-8e5b-29a73710dff3" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/ArchiveService/webresources/projects/1000001</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="78618765425763174"/>
+  <con:entry key="originalUrl" value=""/>
+  <con:entry key="projectName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>projectName</con:entry><con:entry>submitter</con:entry><con:entry>originalUrl</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:method name="getArchivalProjectList" id="b22d5ecc-a0db-4066-85eb-66b3523169f7" method="GET"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:xht="http://www.w3.org/1999/xhtml">xht:html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:proj="http://thinkpad-t430/ArchiveService/webresources/projects">proj:Response</con:element></con:representation><con:request name="Request 1" id="be7c2069-0809-436e-943f-79503b69a104" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://thinkpad-t430:8080</con:endpoint><con:request/><con:originalUri>http://thinkpad-t430/ArchiveService/webresources/projects</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="45328727805716187"/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>projectName</con:entry><con:entry>submitter</con:entry><con:entry>originalUrl</con:entry></con:parameterOrder></con:request></con:method><con:method name="addArchivalProject" id="cd2bd065-3a69-48a2-b697-014c2966f5dc" method="POST"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:xht="http://www.w3.org/1999/xhtml">xht:html</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:proj="http://thinkpad-t430/ArchiveService/webresources/projects">proj:Response</con:element></con:representation><con:request name="Request 1" id="e3225406-0aa8-4eb4-9e22-68083e2d9044" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://thinkpad-t430:8080</con:endpoint><con:request>{
+	"projectName": "Funzone Gaming Emporium",
+	"originalUrl": "https://funzone.com"
+}</con:request><con:originalUri>http://thinkpad-t430/ArchiveService/webresources/projects</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="48163481684532045321784"/>
+  <con:entry key="originalUrl" value=""/>
+  <con:entry key="projectName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>projectName</con:entry><con:entry>submitter</con:entry><con:entry>originalUrl</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="resources" path="/ArchiveService/webresources/resources" id="3c6f3c9a-5475-4531-bc73-df7dcbf9b263"><con:settings/><con:parameters><con:parameter><con:name>apiToken</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>requestId</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>submitter</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>name</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>type</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:resource name="1000001" path="1000001" id="8cfa939c-f549-4186-b556-b08d38bd7074"><con:settings/><con:parameters><con:parameter><con:name>apiToken</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="getArchiveResource" id="7c3a05bc-0b00-41ce-a0e6-6b2201f80083" method="GET"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:xht="http://www.w3.org/1999/xhtml">xht:html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ns="http://localhost/ArchiveService/webresources/resources/1000001">ns:Response</con:element></con:representation><con:request name="Request 1" id="c0241666-6a3d-454f-abc9-bb49d0b2d3cf" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/ArchiveService/webresources/resources/1000001</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="48165486871524813"/>
+  <con:entry key="name" value=""/>
+  <con:entry key="type" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>submitter</con:entry><con:entry>name</con:entry><con:entry>type</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:method name="getArchiveResourceList" id="94a09f0c-ee07-44f7-8cca-7d875adc0d7f" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:res="http://localhost/ArchiveService/webresources/resources">res:Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:xht="http://www.w3.org/1999/xhtml">xht:html</con:element></con:representation><con:request name="Request 1" id="c3d20ac8-7fe5-466e-be19-ebc720bafe51" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/ArchiveService/webresources/resources</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="14863124861781524"/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>submitter</con:entry><con:entry>name</con:entry><con:entry>type</con:entry></con:parameterOrder></con:request></con:method><con:method name="addArchiveResource" id="3ba34af8-2244-4284-b29b-54e81c41bb92" method="POST"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:xht="http://www.w3.org/1999/xhtml">xht:html</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>text/plain</con:mediaType><con:status>400</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:res="http://localhost/ArchiveService/webresources/resources">res:Response</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Request 1" id="e7b3ac1c-af38-43a8-b81c-385891522ac6" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request>{
+	"name": "beetbopz music clip 03",
+	"type":"AUDIO",
+	"originalUrl": "https://freemusic.org/media/audio/beetbopz_03.mp3"
+}</con:request><con:originalUri>http://localhost/ArchiveService/webresources/resources</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="718578445216345378512784"/>
+  <con:entry key="name" value=""/>
+  <con:entry key="type" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>submitter</con:entry><con:entry>name</con:entry><con:entry>type</con:entry></con:parameterOrder></con:request></con:method></con:resource></con:interface><con:testSuite id="32981ad1-0591-4f04-a36f-f55214dbf6d4" name="ArchiveServiceBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="6f124389-b963-4fa2-9975-ee0734a6b2d5" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addArchivalProject TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="0affc4ef-ef5f-484e-8509-a54370009f11" name="addArchivalProject test add"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>addArchivalProject</con:operation><con:request name="addArchivalProject test add" id="9ac68c4f-590b-4a79-a2be-47323fc84b25"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:addArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>54654446457665368856</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectName>Mängukoobas</ns:projectName>
+         <ns:originalUrl>http://mangukoobas.ee</ns:originalUrl>
+      </ns:addArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="befeed89-ce7d-4c57-8298-ca459ded2ae5" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="f8b1ca3a-fc62-455b-9dba-34bb6ced89ec" name="Contains projectName"><con:configuration><token>&lt;projectName>Mängukoobas&lt;/projectName>
+</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="311f6018-d9f1-401e-9d75-1f7464be3155" name="Contains originalUrl"><con:configuration><token>&lt;originalUrl>http://mangukoobas.ee&lt;/originalUrl></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="30dadda5-4702-4720-9497-ec2acba2f2c8" name="Contains submitter"><con:configuration><token>&lt;submitter>Archives R Us&lt;/submitter></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/addArchivalProjectRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="e92f96dc-554a-4f83-a6fc-926db6dc5405" name="addArchivalProject test failure"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>addArchivalProject</con:operation><con:request name="addArchivalProject test failure" id="9ac68c4f-590b-4a79-a2be-47323fc84b25"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:addArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>53453466435787543453</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectName></ns:projectName>
+         <ns:originalUrl></ns:originalUrl>
+      </ns:addArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="116b2039-5c8f-4a3e-bef2-eb80b49c7db2" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Not SOAP Fault Assertion" id="2724287e-3e25-4465-b974-34c457086458" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/addArchivalProjectRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="dbccd8fe-8e4a-4b81-b2f9-112e179800ca" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addArchiveResource TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="fc968237-2396-40e9-933b-9b914084069c" name="addArchiveResource test add"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>addArchiveResource</con:operation><con:request name="addArchiveResource test add" id="4587a9a6-41de-4a3e-9839-1c2f5fbdb10b"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:addArchiveResourceRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>827818578337852872</ns:requestId>
+         </ns:requestHeader>
+         <ns:name>billyjoel-discography</ns:name>
+         <ns:type>audio</ns:type>
+         <ns:originalUrl>http://freemusic.com/audio/billyjoel-discography.mp3</ns:originalUrl>
+      </ns:addArchiveResourceRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="fd99405d-121d-4a28-a4a9-da2d006acf8c" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="d7b9621e-3f6b-4c70-90de-7fb8e76a0ab6" name="Contains name"><con:configuration><token>&lt;name>billyjoel-discography&lt;/name></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="a38a7465-4d7d-4367-8403-3ac9c0119f77" name="Contains audio"><con:configuration><token>&lt;type>audio&lt;/type></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="ca13cb17-11c1-4414-bf49-96ba25bd7eea" name="Contains originalUrl"><con:configuration><token>&lt;originalUrl>http://freemusic.com/audio/billyjoel-discography.mp3&lt;/originalUrl></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="d67b46e5-681c-474f-8ee3-1377d623bdf3" name="Contains submitter"><con:configuration><token>&lt;submitter>Archives R Us&lt;/submitter></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/addArchiveResourceRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="53a560ce-e9cf-4e82-8a0c-8f994866556d" name="addArchiveResource test failure"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>addArchiveResource</con:operation><con:request name="addArchiveResource test failure" id="4587a9a6-41de-4a3e-9839-1c2f5fbdb10b"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:addArchiveResourceRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>587524527863756865</ns:requestId>
+         </ns:requestHeader>
+         <ns:name></ns:name>
+         <ns:type></ns:type>
+         <ns:originalUrl></ns:originalUrl>
+      </ns:addArchiveResourceRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="1e4fb0ac-169b-48f5-b58d-6ef4d485bc92" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Not SOAP Fault Assertion" id="03ca0884-169a-457c-b7ab-1c850317bb41" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/addArchiveResourceRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="16d021a4-52d3-4c96-98a3-ede072122b91" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addArchiveResourceToArchivalProject TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="69b48518-5f0e-4c15-9fd5-e221c64315b7" name="addArchiveResourceToArchivalProject test add"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>addArchiveResourceToArchivalProject</con:operation><con:request name="addArchiveResourceToArchivalProject test add" id="78184f29-124e-4413-bddf-b7d34a953162"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:addArchiveResourceToArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>875278654322514247828465</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectId>1000001</ns:projectId>
+         <ns:resourceId>1000004</ns:resourceId>
+      </ns:addArchiveResourceToArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="afddc9f7-3a3d-4dae-8cd3-0eb4206ea916" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="0710a0a9-b5a0-46cc-a1d7-27246c6ff0dc" name="Contains name"><con:configuration><token>&lt;name>Warez - Limp Bizkit Rollin (by Legitripz)&lt;/name></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="1f00dcd5-217b-4288-bd2c-e79763897dc3" name="Contains submitter"><con:configuration><token>&lt;submitter>anon&lt;/submitter></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="51c50c0b-1b9e-4a5c-bca5-21ff56b006e2" name="Contains type"><con:configuration><token>&lt;type>software&lt;/type></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/addArchiveResourceToArchivalProjectRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="435cb1a9-d8f1-4403-864c-1102a3bd3528" name="addArchiveResourceToArchivalProject test fail"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>addArchiveResourceToArchivalProject</con:operation><con:request name="addArchiveResourceToArchivalProject test fail" id="78184f29-124e-4413-bddf-b7d34a953162"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:addArchiveResourceToArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>58725463785462874249675426</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectId>1000003</ns:projectId>
+         <ns:resourceId></ns:resourceId>
+      </ns:addArchiveResourceToArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="afddc9f7-3a3d-4dae-8cd3-0eb4206ea916" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Not SOAP Fault Assertion" id="7e8e11cb-80b7-4c2f-b4fc-184223cdb97d" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/addArchiveResourceToArchivalProjectRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="checkIfResourceIsAdded" id="88027a0d-ae3a-4f80-80d3-772173130528"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchiveResource</con:operation><con:request name="checkIfResourceIsAdded" id="9e5b9433-13ce-4c49-bdfc-dc5fceb5a766"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourceRequest>
+          <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>8752786454322514247828465</ns:requestId>
+         </ns:requestHeader>
+         <ns:resourceId>1000004</ns:resourceId>
+      </ns:getArchiveResourceRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e3dfa358-10aa-4e10-99c4-5219b5e36178"/><con:assertion type="Schema Compliance" id="6bbf171f-c11e-4251-a82e-74864371bf17"><con:configuration/></con:assertion><con:assertion type="XPath Match" id="1ceafd9f-2d6e-4535-8741-af9f14f213db" name="XPath Match"><con:configuration><path>declare namespace ns='http://ns.ounapuu.ee';
+//ns:projectId = 1000001</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="bbe87937-8a30-460c-a657-50e772bbcd3d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getArchivalProject TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="73a8aae8-f7f2-4068-8e3f-172adc68e1b6" name="getArchivalProject test get"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchivalProject</con:operation><con:request name="getArchivalProject test get" id="a5529cc1-f276-43a3-aca6-0ccf00084479"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>8421384513564315261893245</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectId>1000004</ns:projectId>
+      </ns:getArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="7a2f78e0-09e5-4317-be38-bcdee27bc908" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="5fbeb35c-f14a-4fc0-bd6a-25539d8894e5" name="Contains id,name,urls"><con:configuration><token><![CDATA[<id>1000004</id>
+         <projectName>Good warez</projectName>
+         <originalUrl>http://good.warez.biz</originalUrl>
+         <newUrl>https://archiveteam.org/project/1000004</newUrl>]]></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchivalProjectRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="27aae7cd-71ff-4eee-a2e7-11d1ec8e3cba" name="getArchivalProject test fail"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchivalProject</con:operation><con:request name="getArchivalProject test fail" id="a5529cc1-f276-43a3-aca6-0ccf00084479"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>178952187645136534189345</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectId></ns:projectId>
+      </ns:getArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="7a2f78e0-09e5-4317-be38-bcdee27bc908" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Not SOAP Fault Assertion" id="4c8a97c0-3490-4f47-86af-0fbe96aef8b3" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchivalProjectRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="82cc12cf-f891-4c45-be1b-68215dd65ce2" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getArchivalProjectList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="1a82896b-7ab2-4eb2-aff8-a596349a52e8" name="getArchivalProjectList test get"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchivalProjectList</con:operation><con:request name="getArchivalProjectList test get" id="3c86c422-e8ad-4e69-94cd-cb21b835238f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchivalProjectListRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>1846356345231387546181645</ns:requestId>
+         </ns:requestHeader>
+         
+      </ns:getArchivalProjectListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="069b9f8f-24b7-404b-8248-210c3804e4fb" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="8ee7748d-b74a-4614-9494-8dbeb4031c10" name="XPath Match"><con:configuration><path>declare namespace ns='http://ns.ounapuu.ee';
+count(//ns:project) > 3</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchivalProjectListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="8eb9f17a-74b6-485e-b65f-4ef4c692e8c0" name="getArchivalProjectList test get with submitter"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchivalProjectList</con:operation><con:request name="getArchivalProjectList test get with submitter" id="3c86c422-e8ad-4e69-94cd-cb21b835238f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchivalProjectListRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>68714968716546254161786156</ns:requestId>
+         </ns:requestHeader>
+         <!--Optional:-->
+         <ns:submitter>AT Warriors</ns:submitter>
+      </ns:getArchivalProjectListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="069b9f8f-24b7-404b-8248-210c3804e4fb" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="4dd42c33-ca3f-4f0b-8f8a-c0afa0effc6e" name="XPath Match"><con:configuration><path>declare namespace ns='http://ns.ounapuu.ee';
+count(//ns:project) = 2</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchivalProjectListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="cc535bb8-0cbc-4928-895c-8e07b30483d4" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getArchiveResource TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="2277ea49-7a83-4268-89c0-8a6c9f566d34" name="getArchiveResource test get"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchiveResource</con:operation><con:request name="getArchiveResource test get" id="141f38b3-b140-45af-a402-9599b01d4ebc"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourceRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>841654132617864156148648253</ns:requestId>
+         </ns:requestHeader>
+         <ns:resourceId>1000002</ns:resourceId>
+      </ns:getArchiveResourceRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="685766ba-b8a7-4222-ae38-49ee4f4e0cf5" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="00dc5e3f-4125-4a2f-93a0-378532531190" name="XPath Match"><con:configuration><path>declare namespace ns='http://ns.ounapuu.ee';
+//ns:id = 1000002 and
+//ns:name = 'News - Roblox forums' and
+//ns:type = 'webpage' and
+//ns:submitter = 'AT Warriors'</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchiveResourceRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="4c6bb461-db1e-4842-a01e-670f2d4f0362" name="getArchiveResource test fail"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchiveResource</con:operation><con:request name="getArchiveResource test fail" id="141f38b3-b140-45af-a402-9599b01d4ebc"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourceRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>4816854263841486856</ns:requestId>
+         </ns:requestHeader>
+         <ns:resourceId></ns:resourceId>
+      </ns:getArchiveResourceRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="685766ba-b8a7-4222-ae38-49ee4f4e0cf5" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Not SOAP Fault Assertion" id="636b8139-3147-40c4-bbf3-849248a95f50" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchiveResourceRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="0a7cfa0d-4331-4b64-903b-b1431299b2bb" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getArchiveResourceList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4258cebe-3e0d-4465-92fb-b555421627a0" name="getArchiveResourceList test get all"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchiveResourceList</con:operation><con:request name="getArchiveResourceList test get all" id="b76b594d-ba57-474e-bd0f-9bea2663cf89"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourceListRequest>
+        <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>84614856368464828456384512</ns:requestId>
+         </ns:requestHeader>
+    
+      </ns:getArchiveResourceListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="fbbaee5d-7793-4966-9c2c-38f3e9f9a350" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="18406ab0-3589-4b08-ac9f-f89029d3b7cf" name="XPath Match"><con:configuration><path>declare namespace ns='http://ns.ounapuu.ee';
+count(//ns:resource) > 4</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchiveResourceListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="32d73ba4-db4c-4097-936c-33ae4ebcc4a3" name="getArchiveResourceList test get filtered"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchiveResourceList</con:operation><con:request name="getArchiveResourceList test get filtered" id="b76b594d-ba57-474e-bd0f-9bea2663cf89"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourceListRequest>
+        <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>684163845631894648154638</ns:requestId>
+         </ns:requestHeader>
+      
+         <!--Optional:-->
+         <ns:type>audio</ns:type>
+      </ns:getArchiveResourceListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="fbbaee5d-7793-4966-9c2c-38f3e9f9a350" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="1727275b-6162-4557-bb9c-d5aad964c407" name="XPath Match"><con:configuration><path>declare namespace ns='http://ns.ounapuu.ee';
+count(//ns:resource) >= 1 and
+//ns:resource/ns:type = 'audio'</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchiveResourceListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="2a0a6eee-ae1b-4bc3-a040-fde2f2305750" name="getArchiveResourceList test get none"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchiveResourceList</con:operation><con:request name="getArchiveResourceList test get none" id="b76b594d-ba57-474e-bd0f-9bea2663cf89"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourceListRequest>
+        <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>816456384532451354125413</ns:requestId>
+         </ns:requestHeader>
+         <!--Optional:-->
+         <ns:name>Cheeki Breeki</ns:name>
+      </ns:getArchiveResourceListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="fbbaee5d-7793-4966-9c2c-38f3e9f9a350" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="eef49734-016c-469c-afae-fd9aa9ce2060" name="XPath Match"><con:configuration><path>declare namespace ns='http://ns.ounapuu.ee';
+count(//ns:resource) = 0</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchiveResourceListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="db8f904b-7e98-4a51-b8d8-a72006a51bd7" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getArchiveResourcesForArchivalProject TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="f942dcdb-ab99-4e38-b0b3-927cc49d4b99" name="getArchiveResourcesForArchivalProject test get"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchiveResourcesForArchivalProject</con:operation><con:request name="getArchiveResourcesForArchivalProject test get" id="c63d0ea3-b801-4591-9ea3-d6710d8e7116"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourcesForArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>345132485324588632184563218457</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectId>1000001</ns:projectId>
+      </ns:getArchiveResourcesForArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="1e9eca1e-24b0-4b87-9aa3-2ad13bffbcfd" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="15ac3871-b5c2-4a7a-b0eb-5f18de9b7c1f" name="XPath Match"><con:configuration><path>declare namespace ns='http://ns.ounapuu.ee';
+count(//ns:resource) >= 1</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchiveResourcesForArchivalProjectRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="8ef8c227-2bac-4135-bbd0-f2f98d0461d5" name="getArchiveResourcesForArchivalProject test fail"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArchiveServiceBinding</con:interface><con:operation>getArchiveResourcesForArchivalProject</con:operation><con:request name="getArchiveResourcesForArchivalProject test fail" id="c63d0ea3-b801-4591-9ea3-d6710d8e7116"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://thinkpad-t430:8080/ArchiveService/ArchiveService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://ns.ounapuu.ee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getArchiveResourcesForArchivalProjectRequest>
+         <ns:requestHeader>
+            <ns:apiToken>616467686a6a6a6a6a6a6a6a6a6a6a</ns:apiToken>
+            <ns:requestId>66657767876555566565</ns:requestId>
+         </ns:requestHeader>
+         <ns:projectId></ns:projectId>
+      </ns:getArchiveResourcesForArchivalProjectRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="1e9eca1e-24b0-4b87-9aa3-2ad13bffbcfd" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Not SOAP Fault Assertion" id="60e611c8-033c-44b7-a597-08b57e47d261" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://ns.ounapuu.ee/ArchiveServicePortType/getArchiveResourcesForArchivalProjectRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="a550a395-ea82-46be-bfe8-7bdbb6c64a13" name="http://thinkpad-t430:8080 TestSuite"><con:description>TestSuite generated for REST Service [http://thinkpad-t430:8080]</con:description><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="822696cf-f62f-42a3-ba4e-6be8e5f29039" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="projects TestCase" searchProperties="true"><con:description>TestCase generated for REST Resource [projects] located at [/ArchiveService/webresources/projects]</con:description><con:settings/><con:testStep type="restrequest" name="getArchivalProjectList" id="ae18198b-b501-4246-ab64-93aded04a2e0"><con:settings/><con:config service="http://thinkpad-t430:8080" resourcePath="/ArchiveService/webresources/projects" methodName="getArchivalProjectList" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="getArchivalProjectList" id="be7c2069-0809-436e-943f-79503b69a104" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://thinkpad-t430:8080</con:endpoint><con:request/><con:originalUri>http://thinkpad-t430/ArchiveService/webresources/projects</con:originalUri><con:assertion type="JsonPath Existence Match" id="cd35cb94-b56a-4c61-abb5-5cdc8867c357" name="JsonPath Existence Match"><con:configuration><path>$.project</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="45328727805716187"/>
+  <con:entry key="originalUrl" value=""/>
+  <con:entry key="projectName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>projectName</con:entry><con:entry>submitter</con:entry><con:entry>originalUrl</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="addArchivalProject" id="0783a093-c9c3-4fa4-a1bb-ab99a5d910d3"><con:settings/><con:config service="http://thinkpad-t430:8080" resourcePath="/ArchiveService/webresources/projects" methodName="addArchivalProject" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="addArchivalProject" id="e3225406-0aa8-4eb4-9e22-68083e2d9044" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://thinkpad-t430:8080</con:endpoint><con:request>{
+	"projectName": "Funzone Gaming Emporium",
+	"originalUrl": "https://funzone.com"
+}</con:request><con:originalUri>http://thinkpad-t430/ArchiveService/webresources/projects</con:originalUri><con:assertion type="JsonPath Match" id="7839ecc2-443f-47e2-8ac0-26e2473f80fb" name="JsonPath Match"><con:configuration><path>$.projectName</path><content>Funzone Gaming Emporium</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="48163481684532045321784"/>
+  <con:entry key="originalUrl" value=""/>
+  <con:entry key="projectName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>projectName</con:entry><con:entry>submitter</con:entry><con:entry>originalUrl</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="a5319e15-ad59-4d89-9c01-d5f4c650bdbe" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="1000001 TestCase" searchProperties="true"><con:description>TestCase generated for REST Resource [1000001] located at [/ArchiveService/webresources/projects/1000001]</con:description><con:settings/><con:testStep type="restrequest" name="getArchivalProject" id="649539b2-3a81-4bf3-ac4e-9812edefd43b"><con:settings/><con:config service="http://thinkpad-t430:8080" resourcePath="/ArchiveService/webresources/projects/1000001" methodName="getArchivalProject" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="getArchivalProject" id="b0626ee5-cafe-4a4f-8e5b-29a73710dff3" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/ArchiveService/webresources/projects/1000001</con:originalUri><con:assertion type="JsonPath Count" id="b6b9cfcc-b5a9-4e83-aa65-a4080d7f14c1" name="JsonPath Count"><con:configuration><path>$.</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="78618765425763174"/>
+  <con:entry key="originalUrl" value=""/>
+  <con:entry key="projectName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>projectName</con:entry><con:entry>submitter</con:entry><con:entry>originalUrl</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="df0a9733-0ad8-483d-80a2-5a3080b5837c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="resources TestCase" searchProperties="true"><con:description>TestCase generated for REST Resource [resources] located at [/ArchiveService/webresources/projects/1000001/resources]</con:description><con:settings/><con:testStep type="restrequest" name="getArchiveResourcesForArchivalProject" id="9d829d21-c636-4b90-b7cc-66beed932c29"><con:settings/><con:config service="http://thinkpad-t430:8080" resourcePath="/ArchiveService/webresources/projects/1000001/resources" methodName="getArchiveResourcesForArchivalProject" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="getArchiveResourcesForArchivalProject" id="e595c4c2-1a29-4eba-aba9-7561fff01b76" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/ArchiveService/webresources/projects/1000001/resources</con:originalUri><con:assertion type="JsonPath Existence Match" id="85da380e-c142-4481-9eb7-4e6c939844bb" name="JsonPath Existence Match"><con:configuration><path>$.resource</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="JsonPath Existence Match" id="808c90d8-ba6c-4d3c-9c60-d6bd149e745e" name="JsonPath Existence Match 1"><con:configuration><path>$.resource[0].id</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="8145646381684765237457"/>
+  <con:entry key="originalUrl" value=""/>
+  <con:entry key="projectName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>projectName</con:entry><con:entry>submitter</con:entry><con:entry>originalUrl</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="addArchiveResourceToArchivalProject" id="77e1fddb-b102-4506-a623-ff4070696730"><con:settings/><con:config service="http://thinkpad-t430:8080" resourcePath="/ArchiveService/webresources/projects/1000001/resources" methodName="addArchiveResourceToArchivalProject" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="addArchiveResourceToArchivalProject" id="eaa93f91-4b40-46cf-a238-c8d4f7ce8beb" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request>{
+	"resourceId":1000004
+}</con:request><con:originalUri>http://localhost/ArchiveService/webresources/projects/1000001/resources</con:originalUri><con:assertion type="JsonPath Existence Match" id="54a07c28-2d57-4f48-b47a-37ab16c1e603" name="JsonPath Existence Match"><con:configuration><path>$.</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="184532874178541327"/>
+  <con:entry key="originalUrl" value=""/>
+  <con:entry key="projectName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>projectName</con:entry><con:entry>submitter</con:entry><con:entry>originalUrl</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6f768c11-b296-4833-878e-3535758182f1" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="resources TestCase" searchProperties="true"><con:description>TestCase generated for REST Resource [resources] located at [/ArchiveService/webresources/resources]</con:description><con:settings/><con:testStep type="restrequest" name="getArchiveResourceList" id="ad8996cc-6a97-43fb-9d67-857fbce802aa"><con:settings/><con:config service="http://thinkpad-t430:8080" resourcePath="/ArchiveService/webresources/resources" methodName="getArchiveResourceList" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="getArchiveResourceList" id="c3d20ac8-7fe5-466e-be19-ebc720bafe51" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/ArchiveService/webresources/resources</con:originalUri><con:assertion type="JsonPath Existence Match" id="a52d5bf2-bffe-48de-b4f7-898bc2979d4e" name="JsonPath Existence Match"><con:configuration><path>$.resource</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="14863124861781524"/>
+  <con:entry key="name" value=""/>
+  <con:entry key="type" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>submitter</con:entry><con:entry>name</con:entry><con:entry>type</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="addArchiveResource" id="c16e035f-fe46-4227-8247-731185020656"><con:settings/><con:config service="http://thinkpad-t430:8080" resourcePath="/ArchiveService/webresources/resources" methodName="addArchiveResource" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="addArchiveResource" id="e7b3ac1c-af38-43a8-b81c-385891522ac6" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request>{
+	"name": "beetbopz music clip 03",
+	"type":"AUDIO",
+	"originalUrl": "https://freemusic.org/media/audio/beetbopz_03.mp3"
+}</con:request><con:originalUri>http://localhost/ArchiveService/webresources/resources</con:originalUri><con:assertion type="JsonPath Existence Match" id="774ca669-47eb-473d-8cf0-ec6ae28d8b77" name="JsonPath Existence Match"><con:configuration><path>$.</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="40681264-69a2-4c91-a9df-f646d385a397" name="JsonPath Match"><con:configuration><path>$..[?(@.name=='beetbopz music clip 03')][0].type</path><content>AUDIO</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="71857845216345378512784"/>
+  <con:entry key="name" value=""/>
+  <con:entry key="type" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>submitter</con:entry><con:entry>name</con:entry><con:entry>type</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d0e0b422-8c64-4c5c-bde7-2c6b8ea661a9" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="1000001 TestCase" searchProperties="true"><con:description>TestCase generated for REST Resource [1000001] located at [/ArchiveService/webresources/resources/1000001]</con:description><con:settings/><con:testStep type="restrequest" name="getArhiveResource" id="f71ff136-5c15-413f-b97d-915b5cb04c54"><con:settings/><con:config service="http://thinkpad-t430:8080" resourcePath="/ArchiveService/webresources/resources/1000001" methodName="getArchiveResource" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="getArhiveResource" id="c0241666-6a3d-454f-abc9-bb49d0b2d3cf" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/ArchiveService/webresources/resources/1000001</con:originalUri><con:assertion type="JsonPath Existence Match" id="2f41321d-2c31-435d-8e30-c10b2195098b" name="JsonPath Existence Match"><con:configuration><path>$.</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="6dc553bf-0069-45c4-b06d-deaa445baa9c" name="JsonPath Match"><con:configuration><path>$.name</path><content>Some Important Page</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="submitter" value=""/>
+  <con:entry key="apiToken" value="616467686a6a6a6a6a6a6a6a6a6a6a"/>
+  <con:entry key="requestId" value="48165486871524813"/>
+  <con:entry key="name" value=""/>
+  <con:entry key="type" value=""/>
+</con:parameters><con:parameterOrder><con:entry>apiToken</con:entry><con:entry>requestId</con:entry><con:entry>submitter</con:entry><con:entry>name</con:entry><con:entry>type</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
