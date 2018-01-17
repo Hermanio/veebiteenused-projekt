@@ -14,10 +14,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 
 /**
  * REST Web Service
@@ -30,12 +28,6 @@ public class ArchiveResourcesResource {
     @Context
     private UriInfo context;
 
-    /**
-     * Retrieves representation of an instance of
-     * ee.ounapuu.ArchiveResourcesResource
-     *
-     * @return an instance of ee.ounapuu.ns.ArchiveResourceType
-     */
     @GET
     @Path("{id : \\d+}")
     @Produces("application/json")
@@ -79,12 +71,6 @@ public class ArchiveResourcesResource {
         return service.getArchiveResourceList(request);
     }
 
-    /**
-     * PUT method for updating or creating an instance of
-     * ArchiveResourcesResource
-     *
-     * @param content representation for the resource
-     */
     @POST
     @Consumes("application/json")
     @Produces("application/json")

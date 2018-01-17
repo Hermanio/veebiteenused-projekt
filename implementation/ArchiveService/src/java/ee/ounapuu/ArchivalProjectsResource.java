@@ -17,7 +17,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
-import ee.ounapuu.helper.AddArchiveResourceToArchivalProjectInput;
+import ee.ounapuu.helper.AddArchiveResourceToArchivalProjectDataType;
 
 /**
  * REST Web Service
@@ -32,22 +32,10 @@ public class ArchivalProjectsResource {
     @Context
     private UriInfo context;
 
-    /**
-     * Creates a new instance of ArchivalProjectsResource
-     */
     public ArchivalProjectsResource() {
         service = new ArchiveWebService();
     }
 
-    /**
-     * Retrieves representation of an instance of
-     * ee.ounapuu.ArchivalProjectsResource
-     *
-     * @param apiToken
-     * @param requestId
-     * @param archivalProjectId
-     * @return an instance of ee.ounapuu.ns.ArchivalProjectType
-     */
     @GET
     @Path("{id : \\d+}")
     @Produces("application/json")
@@ -85,15 +73,6 @@ public class ArchivalProjectsResource {
         return service.getArchivalProjectList(request);
     }
 
-    /**
-     * PUT method for updating or creating an instance of
-     * ArchivalProjectsResource
-     *
-     * @param apiToken
-     * @param requestId
-     * @param content representation for the resource
-     * @return
-     */
     @POST
     @Consumes("application/json")
     @Produces("application/json")
@@ -134,7 +113,7 @@ public class ArchivalProjectsResource {
     public ArchiveResourceType addArchiveResourceToArchivalProject(
             @QueryParam("apiToken") String apiToken,
             @QueryParam("requestId") String requestId,
-            AddArchiveResourceToArchivalProjectInput input,
+            AddArchiveResourceToArchivalProjectDataType input,
             @PathParam("id") BigInteger archivalProjectId) {
         AddArchiveResourceToArchivalProjectRequest request = new AddArchiveResourceToArchivalProjectRequest();
         RequestHeaderType header = new RequestHeaderType();

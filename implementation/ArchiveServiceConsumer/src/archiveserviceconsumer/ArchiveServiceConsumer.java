@@ -21,9 +21,6 @@ public class ArchiveServiceConsumer {
     private static BigInteger requestIdTicker = new BigInteger("40000000");
     private static Scanner scanner = new Scanner(System.in);
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         try {
             doAction();
@@ -131,7 +128,7 @@ public class ArchiveServiceConsumer {
 
     private static void doGetArchivalProjectList() {
         System.out.println("Enter filters for filtering the results (leave blank to ignore):");
-        
+
         System.out.println("Project name:");
         String projectName = scanner.nextLine();
         System.out.println("Original URL:");

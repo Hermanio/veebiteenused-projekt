@@ -10,15 +10,15 @@ import java.math.BigInteger;
 /**
  * Helper class to accept special JSON as input for a method.
  */
-public class AddArchiveResourceToArchivalProjectInput {
+public class AddArchiveResourceToArchivalProjectDataType {
 
     private BigInteger resourceId;
 
-    public AddArchiveResourceToArchivalProjectInput() {
+    public AddArchiveResourceToArchivalProjectDataType() {
 
     }
 
-    public AddArchiveResourceToArchivalProjectInput(BigInteger resourceId) {
+    public AddArchiveResourceToArchivalProjectDataType(BigInteger resourceId) {
         this.resourceId = resourceId;
     }
 

@@ -23,7 +23,7 @@ public class RequestCacher {
     public Object getCachedResponse(String requestId) {
         return cachedResponses.get(requestId);
     }
-    
+
     public void cacheResponse(String requestId, Object response) {
         cachedResponses.put(requestId, response);
     }

@@ -4,12 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/build/generated-sources/jax-ws/ee/ounapuu/ns/GetArchivalProjectListRequest.java</file>
+            <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/java/ee/ounapuu/helper/AddArchiveResourceToArchivalProjectDataType.java</file>
             <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/build/generated-sources/jax-ws/ee/ounapuu/ns/GetArchiveResourceListRequest.java</file>
             <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/java/ee/ounapuu/helper/RequestCacher.java</file>
             <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/java/ee/ounapuu/helper/AuthorizationService.java</file>
             <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/java/ee/ounapuu/ApplicationConfig.java</file>
             <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/java/ee/ounapuu/ArchivalProjectsResource.java</file>
-            <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/java/ee/ounapuu/helper/AddArchiveResourceToArchivalProjectInput.java</file>
             <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/build/generated-sources/jax-ws/ee/ounapuu/ns/ArchivalProjectType.java</file>
             <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/java/ee/ounapuu/ArchiveResourcesResource.java</file>
             <file>file:/home/toks/sync/general/uni/5.semester/Veebiteenused/projekt/implementation/ArchiveService/src/java/ee/ounapuu/ArchiveWebService.java</file>

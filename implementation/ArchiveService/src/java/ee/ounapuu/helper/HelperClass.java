@@ -163,7 +163,7 @@ public class HelperClass {
     public static BigInteger getNextProductId() {
         return BigInteger.valueOf(PROJECT_ID++);
     }
-    
+
     public static BigInteger getNextResourceId() {
         return BigInteger.valueOf(RESOURCE_ID++);
     }
